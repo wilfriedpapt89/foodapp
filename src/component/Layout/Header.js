@@ -4,12 +4,12 @@ import HeaderCartButton from "./HeaderCartButton";
 
 const { Fragment } = require("react");
 
-const Header = () => {
+const Header = (props) => {
   return (
     <Fragment>
       <header className={classes.header}>
         <h1>Meal</h1>
-        <HeaderCartButton title='My cart'/>
+        <HeaderCartButton title="My cart" showMeals={props.showMealsHandle} />
       </header>
       <div className={classes["main-image"]}>
         <img src={meals} alt="Meal" />

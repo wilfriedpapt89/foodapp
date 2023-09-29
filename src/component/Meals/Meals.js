@@ -11,16 +11,14 @@ export default function Meals(props) {
     setMeatsModal(true);
   };
 
-  const hideMeatsModal = () => {
+  const hideMeatsModalHandle = () => {
     setMeatsModal(false);
   };
 
   return (
     <Fragment>
-      {meatsModal && (
-        <Cart showModal={showMeatsModal} hideModal={hideMeatsModal} />
-      )}
-      <Header />
+      {meatsModal && <Cart hideMeatsModal={hideMeatsModalHandle} />}
+      <Header showMealsHandle={showMeatsModal} />
       <MealsSummary />
       <AvailableMeals />
     </Fragment>

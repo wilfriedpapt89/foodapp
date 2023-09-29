@@ -25,7 +25,7 @@ const Cart = (props) => {
         >
           Cancel
         </button>
-        <button onClick={props.showMeatsModal}>Order</button>
+        <button onClick={props.hideMeatsModal}>Order</button>
       </div>
     </Modal>
   );
