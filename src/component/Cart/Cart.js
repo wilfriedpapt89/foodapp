@@ -12,20 +12,20 @@ const Cart = (props) => {
     </ul>
   );
   return (
-    <Modal>
+    <Modal onclose={props.hideMeatsModal}>
       {cartItem}
       <div className={classes.total}>
         <span>Total</span>
         <span>$1000</span>
       </div>
       <div className={classes.actions}>
+        <button onClick={props.hideMeatsModal}>Cancel</button>
         <button
           className={classes["button--alt"]}
           onClick={props.hideMeatsModal}
         >
-          Cancel
+          Order
         </button>
-        <button onClick={props.hideMeatsModal}>Order</button>
       </div>
     </Modal>
   );
