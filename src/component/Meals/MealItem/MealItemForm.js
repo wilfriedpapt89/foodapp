@@ -8,16 +8,16 @@ const MealItemForm = (props) => {
   const cartCtx = useContext(CartContext);
   const handleAddMeal = (e) => {
     e.preventDefault();
-    cartCtx.addMeals();
+    cartCtx.addMeals(props.meal.id);
   };
 
   return (
     <Fragment>
       <form className={classes.form} onSubmit={handleAddMeal}>
         <Input
-          label={"Amount" + props.id}
+          label={props.meal.price}
           input={{
-            id: "amount",
+            id: props.meal.id,
             type: "number",
             min: "1",
             max: "5",
