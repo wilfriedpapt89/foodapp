@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-
-const CartContext = React.createContext({
-  meals: [],
-  addMeals: (mealId) => {},
-});
+import CartContext from "./cart-context";
+import { useState } from "react";
 
 export const CartContextProvider = (props) => {
-  const [allMeals, setAllMeals] = useState([]);
+const [allMeals, setAllMeals] = useState([]);
+
+const addItemHandler = item => {};
+const removeItemHandler = id => {};
+
+  const cartContext = {
+    items: [],
+    totalAmount: 0,
+    addItem: addItemHandler,
+    removeItem: removeItemHandler,
+  };
+  
   let contains = false;
   const handleAddingMeals = (newMeal) => {
     console.log("Method execution");
@@ -21,15 +28,8 @@ export const CartContextProvider = (props) => {
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        meals: allMeals,
-        addMeals: handleAddingMeals,
-      }}
-    >
+    <CartContext.Provider value={cartContext}>
       {props.children}
     </CartContext.Provider>
   );
 };
-
-export default CartContext;

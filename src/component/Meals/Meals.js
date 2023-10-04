@@ -4,7 +4,7 @@ import MealsSummary from "./MealsSummary";
 import AvailableMeals from "./AvailableMeals";
 import Cart from "../Cart/Cart";
 import { useState } from "react";
-import { CartContextProvider } from "../Context/cart-context";
+import { CartContextProvider } from "../Context/CartContextProvider";
 
 export default function Meals(props) {
   const [meatsModal, setMeatsModal] = useState(false);
@@ -17,13 +17,11 @@ export default function Meals(props) {
   };
 
   return (
-    <Fragment>
-      <CartContextProvider>
-        {meatsModal && <Cart hideMeatsModal={hideMeatsModalHandle} />}
-        <Header showMealsHandle={showMeatsModal} />
-        <MealsSummary />
-        <AvailableMeals />
-      </CartContextProvider>
-    </Fragment>
+    <CartContextProvider>
+      {meatsModal && <Cart hideMeatsModal={hideMeatsModalHandle} />}
+      <Header showMealsHandle={showMeatsModal} />
+      <MealsSummary />
+      <AvailableMeals />
+    </CartContextProvider>
   );
 }

@@ -40,6 +40,7 @@ const Cart = (props) => {
         for (let i = 0; i < meals.length; i++) {
           if (cartMeal === meals[i].id) {
             console.log(cartMeal + " === " + meals[i].id);
+            cartMealsCtx.total += meals[i].price;
             oneMeal = <li key={meals[i].id}>{meals[i].name}</li>;
           }
         }
@@ -53,7 +54,7 @@ const Cart = (props) => {
       {cartItem}
       <div className={classes.total}>
         <span>Total</span>
-        <span>$1000</span>
+        <span>{"$" + cartMealsCtx.total}</span>
       </div>
       <div className={classes.actions}>
         <button onClick={props.hideMeatsModal}>Cancel</button>
