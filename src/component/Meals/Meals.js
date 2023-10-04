@@ -4,7 +4,7 @@ import MealsSummary from "./MealsSummary";
 import AvailableMeals from "./AvailableMeals";
 import Cart from "../Cart/Cart";
 import { useState } from "react";
-import { CartContextProvider } from "../Context/CartContextProvider";
+import { CartContextProvider } from "../store/CartContextProvider";
 
 export default function Meals(props) {
   const [meatsModal, setMeatsModal] = useState(false);

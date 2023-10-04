@@ -1,60 +1,41 @@
 import { useContext } from "react";
 import Modal from "../Modal/Modal";
 import classes from "./Cart.module.css";
-import CartContext from "../Context/cart-context";
-
-const meals = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+import CartContext from "../store/cart-context";
+import CartItem from "./CartItem";
 
 const Cart = (props) => {
   const cartMealsCtx = useContext(CartContext);
+  const totalAmount = cartMealsCtx.totalAmount.toFixed(2);
+  const cartRemoveHandler = (id) => {
+    cartMealsCtx.removeItem(id);
+  };
+
+  const cartAddHandler = (item) => {
+    cartMealsCtx.addItem({ ...item, amount: 1 });
+  };
 
   const cartItem = (
     <ul className={classes["cart-items"]}>
-      {cartMealsCtx.meals.map((cartMeal) => {
-        let oneMeal = "";
-        for (let i = 0; i < meals.length; i++) {
-          if (cartMeal === meals[i].id) {
-            console.log(cartMeal + " === " + meals[i].id);
-            cartMealsCtx.total += meals[i].price;
-            oneMeal = <li key={meals[i].id}>{meals[i].name}</li>;
-          }
-        }
-        return oneMeal;
-      })}
+      {cartMealsCtx.items.map((cartMeal) => (
+        <CartItem
+          key={cartMeal.id}
+          name={cartMeal.name}
+          price={cartMeal.price}
+          amount={cartMeal.amount}
+          onRemove={cartRemoveHandler.bind(null, cartMeal.id)}
+          onAdd={cartAddHandler.bind(null, cartMeal)}
+        />
+      ))}
     </ul>
   );
-  // console.log("render the modal");
+
   return (
     <Modal onclose={props.hideMeatsModal}>
       {cartItem}
       <div className={classes.total}>
         <span>Total</span>
-        <span>{"$" + cartMealsCtx.total}</span>
+        <span>{"$" + totalAmount}</span>
       </div>
       <div className={classes.actions}>
         <button onClick={props.hideMeatsModal}>Cancel</button>

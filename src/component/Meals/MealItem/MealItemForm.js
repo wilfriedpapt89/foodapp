@@ -1,23 +1,35 @@
-import { Fragment } from "react";
+import { Fragment, useState, useRef } from "react";
 import Input from "../../UI/Input";
 import classes from "./MealItemForm.module.css";
-import { useContext } from "react";
-import CartContext from "../../Context/cart-context";
 
 const MealItemForm = (props) => {
-  const cartCtx = useContext(CartContext);
+  const [amountIsValid, setAmountIsValid] = useState(true);
+  const amountInputRef = useRef();
   const handleAddMeal = (e) => {
     e.preventDefault();
-    cartCtx.addMeals(props.meal.id);
+
+    const enteredAmount = amountInputRef.current.value;
+    const entrerdAmountNumber = +enteredAmount;
+
+    if (
+      enteredAmount.trim().length === 0 ||
+      entrerdAmountNumber < 1 ||
+      entrerdAmountNumber > 5
+    ) {
+      setAmountIsValid(false);
+      return;
+    }
+    props.onAddToCart(entrerdAmountNumber);
   };
 
   return (
     <Fragment>
       <form className={classes.form} onSubmit={handleAddMeal}>
         <Input
-          label={props.meal.price}
+          ref={amountInputRef}
+          label={props.price}
           input={{
-            id: props.meal.id,
+            id: props.id,
             type: "number",
             min: "1",
             max: "5",
@@ -26,6 +38,7 @@ const MealItemForm = (props) => {
         />
         <div>
           <button>+ Add</button>
+          {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
         </div>
       </form>
     </Fragment>
