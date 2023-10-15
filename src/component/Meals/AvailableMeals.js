@@ -2,16 +2,21 @@ import classes from "./AvailableMeals.module.css";
 import Card from "../UI/Card";
 import MealItem from "../Meals/MealItem/MealItem";
 import { useEffect, useState } from "react";
+import useFetch from "../../hooks/use-fetch";
 
 const AvailableMeals = () => {
   const [mealsList, setMealsList] = useState(null);
-  const bootstrapMeals = async () => {
-    try {
-      const response = await fetch("http://localhost:8088/meals/all");
-      if (!response.ok) throw new Error();
-      setMealsList(await response.json());
-    } catch (error) {}
+  const requestConfig = {
+    url: "http://localhost:8088/meals/all",
+    headers: {
+      "content-type": "application/json",
+    },
   };
+  const { error, callApi: bootstrapMeals } = useFetch(
+    requestConfig,
+    setMealsList
+  );
+
   useEffect(() => {
     bootstrapMeals();
   }, []);
