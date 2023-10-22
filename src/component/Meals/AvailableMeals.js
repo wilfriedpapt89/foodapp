@@ -6,19 +6,23 @@ import useFetch from "../../hooks/use-fetch";
 
 const AvailableMeals = () => {
   const [mealsList, setMealsList] = useState(null);
+  const [loadingPhase, setLoadingPhase] = useState(true);
   const requestConfig = {
     url: "http://localhost:8088/meals/all",
     headers: {
       "content-type": "application/json",
     },
   };
-  const { error, callApi: bootstrapMeals } = useFetch(
-    requestConfig,
-    setMealsList
-  );
+  const {
+    isLoading,
+    error,
+    callApi: bootstrapMeals,
+  } = useFetch(requestConfig, setMealsList);
 
   useEffect(() => {
+    setLoadingPhase(true);
     bootstrapMeals();
+    setLoadingPhase(false);
   }, []);
 
   if (!mealsList) {
@@ -37,8 +41,15 @@ const AvailableMeals = () => {
 
   return (
     <section className={classes.meals}>
+      {loadingPhase && (
+        <Card>
+          <h2>Fetching data</h2>
+        </Card>
+      )}
+
       <Card>
-        <ul>{meals}</ul>
+        {!loadingPhase && !error && <ul>{meals}</ul>}
+        {error && <p>Error occurs when fetching data</p>}
       </Card>
     </section>
   );
